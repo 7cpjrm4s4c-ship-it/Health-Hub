@@ -1,0 +1,187 @@
+.event-form {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-lg);
+}
+
+/* ── Type Selector ────────────────────────────────────────────────────────── */
+.ef-type-scroll {
+  overflow-x:   auto;
+  overflow-y:   hidden;
+  margin:       0 calc(-1 * var(--sp-lg));
+  padding:      0 var(--sp-lg);
+  -webkit-overflow-scrolling: touch;
+  /* Hide scrollbar */
+  scrollbar-width: none;
+}
+.ef-type-scroll::-webkit-scrollbar { display: none; }
+
+.ef-type-row {
+  display:     flex;
+  gap:         var(--sp-sm);
+  padding-bottom: 4px;  /* space for box-shadow */
+}
+
+.ef-type-pill {
+  display:      flex;
+  align-items:  center;
+  gap:          6px;
+  padding:      8px 14px;
+  border-radius: var(--r-full);
+  font-size:    13px;
+  font-weight:  500;
+  white-space:  nowrap;
+  flex-shrink:  0;
+  background:   rgba(255, 255, 255, 0.07);
+  border:       1px solid var(--c-border-sub);
+  color:        var(--c-text-sec);
+  transition:   all 0.2s ease;
+}
+
+.ef-type-pill--active {
+  background:   var(--c-accent-dim);
+  border-color: var(--c-border);
+  color:        var(--c-accent);
+}
+
+/* ── Fields ───────────────────────────────────────────────────────────────── */
+.ef-fields {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-md);
+}
+
+.ef-field {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-xs);
+}
+
+.ef-label {
+  font-size:      12px;
+  font-weight:    600;
+  letter-spacing: 0.04em;
+  color:          var(--c-text-sec);
+}
+
+/* ── Input wrapper ────────────────────────────────────────────────────────── */
+.ef-input-wrap {
+  position: relative;
+}
+
+.ef-input {
+  width:         100%;
+  height:        52px;
+  padding:       0 var(--sp-md);
+  border-radius: var(--r-md);
+  background:    rgba(255, 255, 255, 0.07);
+  border:        1px solid var(--c-border-sub);
+  color:         var(--c-text);
+  font-size:     18px;         /* big, easy to read + no iOS zoom */
+  font-weight:   500;
+  transition:    border-color 0.15s ease;
+  -webkit-appearance: none;
+  appearance:    none;
+}
+
+.ef-input:focus {
+  border-color: var(--c-accent);
+  outline:      none;
+}
+
+.ef-input--time {
+  color-scheme: dark;
+}
+
+.ef-unit {
+  position:    absolute;
+  right:       var(--sp-md);
+  top:         50%;
+  transform:   translateY(-50%);
+  font-size:   16px;
+  color:       var(--c-text-ter);
+  pointer-events: none;
+}
+
+/* ── Select ───────────────────────────────────────────────────────────────── */
+.ef-select {
+  width:         100%;
+  height:        52px;
+  padding:       0 var(--sp-md);
+  border-radius: var(--r-md);
+  background:    rgba(255, 255, 255, 0.07);
+  border:        1px solid var(--c-border-sub);
+  color:         var(--c-text);
+  font-size:     16px;
+  -webkit-appearance: none;
+  appearance:    none;
+}
+
+.ef-select:focus {
+  border-color: var(--c-accent);
+  outline:      none;
+}
+
+/* ── Presets ──────────────────────────────────────────────────────────────── */
+.ef-presets {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       var(--sp-xs);
+  margin-top: var(--sp-xs);
+}
+
+.ef-preset {
+  padding:       5px 12px;
+  border-radius: var(--r-full);
+  font-size:     13px;
+  background:    rgba(255, 255, 255, 0.06);
+  border:        1px solid var(--c-border-sub);
+  color:         var(--c-text-sec);
+  transition:    all 0.15s ease;
+}
+
+.ef-preset--active {
+  background:   var(--c-accent-dim);
+  border-color: var(--c-border);
+  color:        var(--c-accent);
+}
+
+/* ── Error ────────────────────────────────────────────────────────────────── */
+.ef-error {
+  font-size:   13px;
+  color:       var(--c-red);
+  padding:     var(--sp-sm) var(--sp-md);
+  background:  var(--c-red-dim);
+  border-radius: var(--r-sm);
+}
+
+/* ── Actions ──────────────────────────────────────────────────────────────── */
+.ef-actions {
+  display: flex;
+  gap:     var(--sp-sm);
+}
+
+.ef-btn {
+  flex:          1;
+  height:        52px;
+  border-radius: var(--r-md);
+  font-size:     16px;
+  font-weight:   600;
+  transition:    all 0.15s ease;
+}
+
+.ef-btn--cancel {
+  background:  rgba(255, 255, 255, 0.07);
+  border:      1px solid var(--c-border-sub);
+  color:       var(--c-text-sec);
+}
+
+.ef-btn--save {
+  background:  var(--c-accent);
+  border:      1px solid transparent;
+  color:       #ffffff;
+  box-shadow:  0 4px 16px var(--c-accent-glow);
+}
+
+.ef-btn--save:active { opacity: 0.85; }
+.ef-btn:disabled     { opacity: 0.5; cursor: not-allowed; }

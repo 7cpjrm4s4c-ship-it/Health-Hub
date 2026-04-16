@@ -1,0 +1,28 @@
+.fab {
+  position:        fixed;
+  /* Sits above content, below nav */
+  bottom:          calc(var(--nav-h) + var(--nav-bottom) + var(--safe-bottom) + 12px);
+  right:           var(--sp-lg);
+  z-index:         400;
+
+  width:           54px;
+  height:          54px;
+  border-radius:   50%;
+  background:      var(--c-accent);
+  color:           #ffffff;
+
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+
+  box-shadow:
+    0 4px 20px var(--c-accent-glow),
+    0 0 0 1px rgba(255, 107, 0, 0.30);
+
+  animation: fabAppear 0.35s var(--spring) both;
+}
+
+@keyframes fabAppear {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1);   }
+}

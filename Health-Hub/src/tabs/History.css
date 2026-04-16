@@ -1,0 +1,208 @@
+.history-page {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-md);
+  padding:        var(--sp-lg);
+  padding-bottom: var(--content-pb);
+}
+
+/* Back button */
+.hist-back-btn {
+  display:     flex;
+  align-items: center;
+  gap:         var(--sp-xs);
+  color:       var(--c-accent);
+  font-size:   14px;
+  font-weight: 600;
+  margin-bottom: var(--sp-xs);
+  transition:  opacity 0.15s ease;
+}
+.hist-back-btn:active { opacity: 0.6; }
+
+/* Count badge next to section label */
+.hist-count {
+  margin-left:  var(--sp-xs);
+  font-weight:  400;
+  color:        var(--c-text-ter);
+}
+
+/* ── List rows ────────────────────────────────────────────────────────────── */
+.hist-list {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-sm);
+}
+
+.hist-row {
+  display:     flex;
+  align-items: flex-start;
+  gap:         var(--sp-md);
+  padding:     var(--sp-md);
+}
+
+.hist-row--active {
+  border-color: rgba(255, 69, 58, 0.30);
+  background:   rgba(255, 69, 58, 0.06);
+}
+
+.hist-row__emoji {
+  font-size:   26px;
+  flex-shrink: 0;
+  margin-top:  2px;
+}
+
+.hist-row__info {
+  flex:           1;
+  display:        flex;
+  flex-direction: column;
+  gap:            4px;
+  min-width:      0;
+}
+
+.hist-row__type {
+  font-size:   15px;
+  font-weight: 600;
+  color:       var(--c-text);
+}
+
+.hist-row__meta {
+  font-size: 12px;
+  color:     var(--c-text-sec);
+}
+
+.hist-row__symptoms {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       4px;
+  margin-top: 4px;
+}
+
+.hist-row__sym-tag {
+  font-size:     11px;
+  padding:       2px 8px;
+  border-radius: var(--r-full);
+  background:    rgba(255,255,255,0.06);
+  border:        1px solid var(--c-border-sub);
+  color:         var(--c-text-ter);
+}
+
+.hist-row__chevron {
+  color:       var(--c-text-ter);
+  flex-shrink: 0;
+  margin-top:  4px;
+}
+
+/* ── Empty state ──────────────────────────────────────────────────────────── */
+.hist-empty {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  gap:             var(--sp-sm);
+  padding:         var(--sp-2xl);
+  border:          2px dashed var(--c-border-sub);
+  border-radius:   var(--r-lg);
+  text-align:      center;
+}
+.hist-empty__icon { font-size: 36px; }
+.hist-empty__text { font-size: 14px; color: var(--c-text-sec); }
+
+/* ── Detail view ──────────────────────────────────────────────────────────── */
+.hist-detail-card { padding: var(--sp-lg); }
+
+.hist-detail-header {
+  display:     flex;
+  align-items: flex-start;
+  gap:         var(--sp-md);
+  margin-bottom: var(--sp-md);
+}
+
+.hist-detail-emoji {
+  font-size:   36px;
+  flex-shrink: 0;
+}
+
+.hist-detail-type {
+  font-size:      22px;
+  font-weight:    700;
+  color:          var(--c-text);
+  letter-spacing: -0.4px;
+}
+
+.hist-detail-dates {
+  font-size:  13px;
+  color:      var(--c-text-sec);
+  margin-top: 4px;
+}
+
+.hist-detail-badge {
+  margin-left:    auto;
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  padding:        var(--sp-sm) var(--sp-md);
+  border-radius:  var(--r-md);
+  background:     rgba(255,255,255,0.05);
+  flex-shrink:    0;
+}
+.hist-detail-badge__num   { font-size: 26px; font-weight: 800; color: var(--c-text); line-height: 1; }
+.hist-detail-badge__label { font-size: 10px; color: var(--c-text-ter); letter-spacing: 0.06em; }
+
+/* Status pill */
+.hist-status-pill {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       5px 14px;
+  border-radius: var(--r-full);
+  font-size:     12px;
+  font-weight:   600;
+  margin-bottom: var(--sp-lg);
+}
+.hist-status-pill--done {
+  background:   var(--c-green-dim);
+  border:       1px solid rgba(48,209,88,0.3);
+  color:        var(--c-green);
+}
+.hist-status-pill--active {
+  background:   var(--c-red-dim);
+  border:       1px solid rgba(255,69,58,0.3);
+  color:        var(--c-red);
+}
+
+/* Sections */
+.hist-section { margin-bottom: var(--sp-lg); }
+
+.hist-section-label {
+  font-size:      11px;
+  font-weight:    600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          var(--c-text-sec);
+  margin-bottom:  var(--sp-sm);
+}
+
+.hist-symptom-row {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       var(--sp-xs);
+}
+
+.hist-med-list {
+  display:        flex;
+  flex-direction: column;
+  gap:            6px;
+}
+.hist-med-row {
+  display:     flex;
+  gap:         var(--sp-sm);
+  align-items: center;
+  padding:     8px var(--sp-sm);
+  background:  rgba(255,255,255,0.04);
+  border-radius: var(--r-sm);
+}
+.hist-med-name { font-size: 13px; color: var(--c-text); }
+
+.hist-notes {
+  font-size:   14px;
+  color:       var(--c-text-sec);
+  line-height: 1.5;
+}

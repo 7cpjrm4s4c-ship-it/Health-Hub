@@ -1,0 +1,103 @@
+.analysis-page {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-md);
+  padding:        var(--sp-lg);
+  padding-bottom: var(--content-pb);
+}
+
+/* Period filter */
+.an-period-row {
+  display: flex;
+  gap:     var(--sp-sm);
+}
+
+.an-period-btn {
+  flex:          1;
+  height:        38px;
+  border-radius: var(--r-full);
+  font-size:     13px;
+  font-weight:   600;
+  background:    rgba(255, 255, 255, 0.07);
+  border:        1px solid var(--c-border-sub);
+  color:         var(--c-text-sec);
+  transition:    all 0.2s ease;
+}
+
+.an-period-btn--active {
+  background:   var(--c-accent);
+  border-color: var(--c-accent);
+  color:        #ffffff;
+}
+
+/* Cards */
+.an-card {
+  padding: var(--sp-md) var(--sp-md) var(--sp-sm);
+}
+
+.an-card__title {
+  font-size:      12px;
+  font-weight:    600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color:          var(--c-text-sec);
+  margin-bottom:  var(--sp-sm);
+}
+
+/* Skeleton loader */
+.an-skeleton {
+  height:        110px;
+  border-radius: var(--r-sm);
+  background:    rgba(255,255,255,0.05);
+}
+
+/* Correlations */
+.an-corr-list {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-sm);
+}
+
+.an-corr-card {
+  display:     flex;
+  align-items: center;
+  gap:         var(--sp-md);
+  padding:     var(--sp-md);
+}
+
+.an-corr-emoji  { font-size: 26px; flex-shrink: 0; }
+
+.an-corr-text {
+  display:        flex;
+  flex-direction: column;
+  gap:            3px;
+  flex:           1;
+  min-width:      0;
+}
+
+.an-corr-trigger { font-size: 12px; color: var(--c-text-sec); }
+.an-corr-result  { font-size: 14px; font-weight: 600; }
+
+/* Baseline grid */
+.an-baseline-grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   var(--sp-sm);
+}
+
+.an-baseline-card {
+  padding: var(--sp-md);
+}
+
+.an-baseline-val {
+  display:        block;
+  font-size:      22px;
+  font-weight:    700;
+  letter-spacing: -0.4px;
+  margin-bottom:  4px;
+}
+
+.an-baseline-label {
+  font-size: 11px;
+  color:     var(--c-text-sec);
+}

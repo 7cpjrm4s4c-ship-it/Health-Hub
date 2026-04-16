@@ -1,0 +1,64 @@
+.app {
+  height:              100%;
+  min-height:          100dvh;
+  min-height:          100vh;
+  position:            relative;
+  overscroll-behavior: none;
+}
+
+.app-content {
+  position: absolute;
+  top:      var(--header-h);
+  bottom:   0;
+  left:     0;
+  right:    0;
+  overflow: hidden;
+}
+
+/* Stable wrapper: full size, no overflow */
+.tab-wrapper {
+  position: relative;
+  width:    100%;
+  height:   100%;
+}
+
+/* Default: unmounted tabs have no display */
+.tab-slot {
+  position:       absolute;
+  inset:          0;
+  display:        none;
+  flex-direction: column;
+  overflow:       hidden;
+}
+
+/* Active slot: visible with entrance animation */
+.tab-slot[data-active="true"] {
+  display:   flex;
+  animation: tabEnter 0.22s var(--ease-out) both;
+}
+
+/* keepMounted tabs (Calendar, Analysis):
+   Once visited, stay in DOM but are visually hidden when not active.
+   This preserves:  scroll position · filter state · chart data · React state
+   contain:strict gives Safari a layout isolation hint → no paint cost. */
+.tab-slot--keep {
+  display: flex;   /* always rendered once mounted */
+}
+
+.tab-slot--keep[data-active="false"],
+.tab-slot--keep:not([data-active="true"]) {
+  visibility:     hidden;
+  pointer-events: none;
+  contain:        strict;   /* isolate layout/paint from active tab */
+  animation:      none;
+}
+
+.tab-slot--today { display: none; }
+.tab-slot--today[data-active="true"] { display: flex; animation: none; }
+
+.tab-loading { height: 100%; background: transparent; }
+
+
+/* ── Scroll container within tabs ──────────────────────────────────────────── */
+/* (class defined in reset.css, referenced here for documentation) */
+/* All tab content must use class="scroll-container" for correct iOS behaviour */

@@ -1,0 +1,359 @@
+/* ─── Illness Tab ──────────────────────────────────────────────────────────── */
+
+.illness-page {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-md);
+  padding:        var(--sp-lg);
+  padding-bottom: var(--content-pb);
+}
+
+/* ── Empty state ────────────────────────────────────────────────────────────── */
+.ill-empty {
+  flex:            1;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  gap:             var(--sp-sm);
+  padding:         var(--sp-2xl);
+  margin-top:      var(--sp-xl);
+  min-height:      200px;
+}
+.ill-empty__icon  { font-size: 48px; }
+.ill-empty__title { font-size: 17px; font-weight: 700; color: var(--c-text); }
+.ill-empty__sub   { font-size: 14px; color: var(--c-text-sec); text-align: center; }
+
+/* ── Shared card ────────────────────────────────────────────────────────────── */
+.ill-card { padding: var(--sp-lg); }
+
+/* ── Header card ────────────────────────────────────────────────────────────── */
+.ill-card__top {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     flex-start;
+  margin-bottom:   var(--sp-lg);
+}
+
+.ill-card__eyebrow {
+  font-size:      11px;
+  font-weight:    600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          var(--c-text-sec);
+  margin-bottom:  var(--sp-xs);
+}
+.ill-card__type {
+  font-size:      26px;
+  font-weight:    700;
+  color:          var(--c-text);
+  letter-spacing: -0.5px;
+  line-height:    1.1;
+}
+.ill-card__since {
+  font-size:  13px;
+  color:      var(--c-text-sec);
+  margin-top: var(--sp-xs);
+}
+
+/* Day badge */
+.ill-day-badge {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  justify-content: center;
+  min-width:      60px;
+  padding:        var(--sp-sm) var(--sp-md);
+  border-radius:  var(--r-md);
+  background:     var(--c-red-dim);
+  border:         1px solid rgba(255, 69, 58, 0.25);
+}
+.ill-day-badge__num   { font-size: 30px; font-weight: 800; color: var(--c-red); line-height: 1; }
+.ill-day-badge__label { font-size: 10px; font-weight: 600; color: rgba(255,69,58,0.7); letter-spacing: 0.06em; }
+
+/* Temp pill */
+.ill-temp-pill {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           var(--sp-sm);
+  padding:       6px 14px;
+  border-radius: var(--r-full);
+  border:        1px solid;
+  margin-bottom: var(--sp-lg);
+}
+.ill-temp-pill__val   { font-size: 18px; font-weight: 700; }
+.ill-temp-pill__label { font-size: 12px; font-weight: 500; }
+
+/* ── Fever chart ────────────────────────────────────────────────────────────── */
+.ill-chart-wrap    { margin-top: var(--sp-xs); }
+.ill-chart-title {
+  font-size:      11px;
+  font-weight:    600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          var(--c-text-sec);
+  margin-bottom:  var(--sp-sm);
+}
+
+.ill-chart-tooltip {
+  background:    rgba(18,18,18,0.95);
+  border:        1px solid var(--c-border);
+  border-radius: var(--r-sm);
+  padding:       6px 10px;
+  display:       flex;
+  flex-direction: column;
+  gap:           2px;
+}
+.ill-chart-tooltip__date { font-size: 11px; color: var(--c-text-sec); }
+.ill-chart-tooltip__val  { font-size: 16px; font-weight: 700; }
+
+.ill-no-data-hint {
+  width:         100%;
+  padding:       10px;
+  border-radius: var(--r-sm);
+  background:    rgba(255,255,255,0.04);
+  border:        1px dashed var(--c-border-sub);
+  color:         var(--c-text-ter);
+  font-size:     13px;
+  text-align:    center;
+  transition:    all 0.15s ease;
+}
+.ill-no-data-hint:active {
+  background:   var(--c-accent-dim);
+  border-color: var(--c-border);
+  color:        var(--c-accent);
+}
+
+/* ── Section headers ────────────────────────────────────────────────────────── */
+.ill-section-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   var(--sp-sm);
+}
+.ill-section-title {
+  font-size:      11px;
+  font-weight:    600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          var(--c-text-sec);
+}
+
+.ill-add-btn {
+  width:           28px;
+  height:          28px;
+  border-radius:   50%;
+  background:      var(--c-accent-dim);
+  border:          1px solid var(--c-border);
+  color:           var(--c-accent);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  transition:      all 0.15s ease;
+}
+.ill-add-btn:active { opacity: 0.7; }
+
+/* ── Symptoms ───────────────────────────────────────────────────────────────── */
+.ill-symptom-row {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       var(--sp-xs);
+}
+
+.ill-symptom-tag { cursor: default; }
+
+.ill-empty-hint {
+  font-size: 13px;
+  color:     var(--c-text-ter);
+}
+
+/* Symptom picker */
+.ill-symptom-picker {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       var(--sp-xs);
+  margin-top: var(--sp-sm);
+  padding-top: var(--sp-sm);
+  border-top: 1px solid var(--c-border-sub);
+}
+
+.ill-symptom-opt {
+  padding:       5px 12px;
+  border-radius: var(--r-full);
+  font-size:     12px;
+  font-weight:   500;
+  background:    rgba(255,255,255,0.06);
+  border:        1px solid var(--c-border-sub);
+  color:         var(--c-text-sec);
+  transition:    all 0.15s ease;
+}
+.ill-symptom-opt:active {
+  background:   var(--c-accent-dim);
+  border-color: var(--c-border);
+  color:        var(--c-accent);
+}
+
+/* ── Medications ────────────────────────────────────────────────────────────── */
+.ill-med-list {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-xs);
+  margin-top:     var(--sp-sm);
+}
+
+.ill-med-row {
+  display:     flex;
+  align-items: center;
+  gap:         var(--sp-sm);
+  padding:     9px var(--sp-sm);
+  background:  rgba(255,255,255,0.04);
+  border-radius: var(--r-sm);
+}
+
+.ill-med-emoji { font-size: 16px; flex-shrink: 0; }
+
+.ill-med-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.ill-med-name     { font-size: 14px; color: var(--c-text); }
+.ill-med-dose     { font-size: 12px; color: var(--c-text-sec); }
+.ill-med-schedule { font-size: 12px; color: var(--c-accent); flex-shrink: 0; }
+
+/* ── Close / confirm buttons ────────────────────────────────────────────────── */
+.ill-close-btn {
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  gap:           var(--sp-sm);
+  width:         100%;
+  padding:       14px;
+  border-radius: var(--r-md);
+  background:    rgba(255,255,255,0.05);
+  border:        1px solid var(--c-border-sub);
+  color:         var(--c-text-sec);
+  font-size:     14px;
+  font-weight:   600;
+  transition:    all 0.15s ease;
+}
+.ill-close-btn:active {
+  background:   var(--c-green-dim);
+  border-color: rgba(48,209,88,0.3);
+  color:        var(--c-green);
+}
+
+.ill-confirm-close        { padding: var(--sp-lg); }
+.ill-confirm-close__text  { font-size: 14px; color: var(--c-text-sec); margin-bottom: var(--sp-md); }
+.ill-confirm-close__actions { display: flex; gap: var(--sp-sm); }
+
+/* ── Shared form elements ───────────────────────────────────────────────────── */
+.ill-field {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-xs);
+}
+.ill-label {
+  font-size:      12px;
+  font-weight:    600;
+  letter-spacing: 0.04em;
+  color:          var(--c-text-sec);
+}
+.ill-input {
+  width:         100%;
+  height:        52px;
+  padding:       0 var(--sp-md);
+  border-radius: var(--r-md);
+  background:    rgba(255,255,255,0.07);
+  border:        1px solid var(--c-border-sub);
+  color:         var(--c-text);
+  font-size:     18px;
+  -webkit-appearance: none;
+  appearance:    none;
+  transition:    border-color 0.15s ease;
+}
+.ill-input:focus       { border-color: var(--c-accent); }
+.ill-input--time       { color-scheme: dark; }
+
+.ill-error {
+  font-size:   13px;
+  color:       var(--c-red);
+  padding:     var(--sp-sm) var(--sp-md);
+  background:  var(--c-red-dim);
+  border-radius: var(--r-sm);
+}
+
+/* ── New illness form ───────────────────────────────────────────────────────── */
+.ill-new-form        { display: flex; flex-direction: column; gap: var(--sp-md); }
+.ill-new-form__label {
+  font-size:      12px;
+  font-weight:    600;
+  letter-spacing: 0.04em;
+  color:          var(--c-text-sec);
+  text-transform: uppercase;
+}
+.ill-new-form__types {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       var(--sp-xs);
+}
+.ill-type-btn {
+  padding:       7px 14px;
+  border-radius: var(--r-full);
+  font-size:     13px;
+  font-weight:   500;
+  background:    rgba(255,255,255,0.07);
+  border:        1px solid var(--c-border-sub);
+  color:         var(--c-text-sec);
+  transition:    all 0.2s ease;
+}
+.ill-type-btn--active {
+  background:   var(--c-accent-dim);
+  border-color: var(--c-border);
+  color:        var(--c-accent);
+}
+.ill-new-form__actions { display: flex; gap: var(--sp-sm); }
+
+/* ── Fever form ─────────────────────────────────────────────────────────────── */
+.ill-fever-form          { display: flex; flex-direction: column; gap: var(--sp-md); }
+.ill-fever-form__presets { display: flex; flex-wrap: wrap; gap: var(--sp-xs); }
+.ill-preset-btn {
+  padding:       6px 12px;
+  border-radius: var(--r-full);
+  font-size:     13px;
+  background:    rgba(255,255,255,0.07);
+  border:        1px solid var(--c-border-sub);
+  color:         var(--c-text-sec);
+  transition:    all 0.15s ease;
+}
+.ill-preset-btn--active {
+  background:   var(--c-accent-dim);
+  border-color: var(--c-border);
+  color:        var(--c-accent);
+}
+.ill-fever-form__fields  { display: flex; gap: var(--sp-sm); }
+.ill-fever-form__fields .ill-field { flex: 1; }
+.ill-fever-form__actions { display: flex; gap: var(--sp-sm); }
+
+/* ── Shared action buttons ──────────────────────────────────────────────────── */
+.ill-action-btn {
+  flex:          1;
+  height:        52px;
+  border-radius: var(--r-md);
+  font-size:     16px;
+  font-weight:   600;
+  transition:    all 0.15s ease;
+}
+.ill-action-btn--cancel {
+  background:  rgba(255,255,255,0.07);
+  border:      1px solid var(--c-border-sub);
+  color:       var(--c-text-sec);
+}
+.ill-action-btn--save {
+  background:  var(--c-accent);
+  border:      1px solid transparent;
+  color:       #fff;
+  box-shadow:  0 4px 16px var(--c-accent-glow);
+}
+.ill-action-btn--save:active { opacity: 0.85; }

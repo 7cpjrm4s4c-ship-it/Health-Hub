@@ -1,0 +1,74 @@
+@import './tokens.css';
+@import './glass.css';
+@import './animations.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  height:              100vh;   /* fallback */
+  height:              100dvh;  /* modern Safari – MUST be last */
+  overflow:            hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  height:              100%;
+  font-family:         var(--font);
+  font-size:           16px;    /* ≥16px prevents iOS auto-zoom on input focus */
+  line-height:         1.4;
+  color:               var(--c-text);
+  background:          var(--c-bg);
+  overflow:            hidden;
+  overscroll-behavior: none;
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height:         100%;
+  min-height:     100vh;   /* fallback */
+  min-height:     100dvh;  /* MUST be last */
+  display:        flex;
+  flex-direction: column;
+}
+
+/* ── Scrollable containers ──────────────────────────────────────────────────── */
+/* touch-action:pan-y
+   → enables passive scroll gesture prediction in Safari
+   → prevents horizontal gesture conflicts with future drag-switcher
+   → required for 120Hz ProMotion smooth scrolling
+   → critical for scroll FPS on older iPhones
+   window.scrollY is always 0 in iOS PWA when html/body overflow:hidden —
+   all scrolling happens inside .scroll-container children. */
+.scroll-container {
+  overflow-y:                 auto;
+  overflow-x:                 hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y:      contain;
+  touch-action:               pan-y;
+}
+
+/* ── Inputs – minimum 16px prevents iOS auto-zoom ───────────────────────────── */
+input, select, textarea, button {
+  font-family: var(--font);
+  font-size:   16px;
+  color:       var(--c-text);
+  background:  transparent;
+  border:      none;
+  outline:     none;
+}
+
+button { cursor: pointer; }
+
+.visually-hidden {
+  position:    absolute;
+  width: 1px;  height: 1px;
+  overflow:    hidden;
+  clip:        rect(0, 0, 0, 0);
+  white-space: nowrap;
+}

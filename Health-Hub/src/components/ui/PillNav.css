@@ -1,0 +1,93 @@
+:root {
+  --pill-item-w: 68px;
+  --pill-item-h: 52px;
+  --pill-gap:    4px;
+  --pill-pad:    8px;
+}
+
+.pill-nav {
+  position:  fixed;
+  bottom:    calc(var(--nav-bottom) + var(--safe-bottom));
+  left:      50%;
+  transform: translateX(-50%);
+  z-index:   500;
+
+  width: calc(
+    5 * var(--pill-item-w) +
+    4 * var(--pill-gap)    +
+    2 * var(--pill-pad)
+  );
+
+  display:     flex;
+  align-items: center;
+  gap:         var(--pill-gap);
+  padding:     var(--pill-pad);
+
+  background:              rgba(18, 18, 18, 0.88);
+  backdrop-filter:         blur(var(--glass-blur-lg)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(var(--glass-sat));
+  border:                  1px solid rgba(255, 255, 255, 0.10);
+  border-radius:           var(--r-full);
+
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.70),
+    0 0 0 0.5px rgba(255, 255, 255, 0.04) inset;
+}
+
+/* ── Sliding highlight ────────────────────────────────────────────────────── */
+.pill-nav__highlight {
+  position:       absolute;
+  top:            var(--pill-pad);
+  left:           var(--pill-pad);
+  width:          var(--pill-item-w);
+  height:         var(--pill-item-h);
+  border-radius:  var(--r-full);
+  background:     var(--c-accent);
+  pointer-events: none;
+  z-index:        0;
+  transition:     transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* NO permanent will-change */
+}
+
+/* Activate GPU layer only during the 280ms animation window */
+.pill-nav__highlight--animating {
+  will-change: transform;
+}
+
+/* ── Items ────────────────────────────────────────────────────────────────── */
+.pill-nav__item {
+  position:        relative;
+  z-index:         1;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  gap:             3px;
+  width:           var(--pill-item-w);
+  height:          var(--pill-item-h);
+  flex-shrink:     0;
+  background:      transparent;
+  color:           var(--c-text-ter);
+  transition:      color 0.2s ease;
+}
+
+.pill-nav__item--active { color: #ffffff; }
+.pill-nav__icon         { flex-shrink: 0; }
+
+.pill-nav__label {
+  font-size:      10px;
+  font-weight:    600;
+  white-space:    nowrap;
+  height:         14px;
+  line-height:    14px;
+  opacity:        0;
+  transition:     opacity 0.15s ease;
+  pointer-events: none;
+}
+.pill-nav__item--active .pill-nav__label { opacity: 1; }
+
+.pill-nav__item:focus-visible {
+  outline:       none;
+  box-shadow:    0 0 0 2px var(--c-accent-glow), 0 0 0 1px var(--c-accent);
+  border-radius: var(--r-full);
+}

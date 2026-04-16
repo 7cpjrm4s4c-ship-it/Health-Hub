@@ -1,0 +1,87 @@
+/* ── Overlay ──────────────────────────────────────────────────────────────── */
+.sheet-overlay {
+  position:   fixed;
+  inset:      0;
+  z-index:    600;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display:    flex;
+  align-items: flex-end;
+}
+
+/* ── Panel ────────────────────────────────────────────────────────────────── */
+.sheet-panel {
+  width:      100%;
+  max-height: 88vh;
+  display:    flex;
+  flex-direction: column;
+
+  background:            rgba(16, 16, 16, 0.97);
+  backdrop-filter:       blur(40px) saturate(1.8);
+  -webkit-backdrop-filter: blur(40px) saturate(1.8);
+  border:                1px solid var(--c-border);
+  border-bottom:         none;
+  border-radius:         var(--r-xl) var(--r-xl) 0 0;
+
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.6),
+              0 0 0 0.5px rgba(255, 255, 255, 0.05) inset;
+
+  /* Safe area at the bottom */
+  padding-bottom: calc(var(--safe-bottom) + var(--sp-lg));
+
+  /* Smooth snap-back after drag */
+  transition: transform 0.3s var(--spring);
+}
+
+/* ── Drag handle ──────────────────────────────────────────────────────────── */
+.sheet-handle-bar {
+  width:         40px;
+  height:        4px;
+  border-radius: var(--r-full);
+  background:    rgba(255, 255, 255, 0.20);
+  margin:        12px auto 0;
+  flex-shrink:   0;
+  cursor:        grab;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+.sheet-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         var(--sp-md) var(--sp-lg) var(--sp-sm);
+  flex-shrink:     0;
+}
+
+.sheet-title {
+  font-size:      17px;
+  font-weight:    700;
+  color:          var(--c-text);
+  letter-spacing: -0.3px;
+}
+
+.sheet-close {
+  width:           34px;
+  height:          34px;
+  border-radius:   50%;
+  background:      rgba(255, 255, 255, 0.08);
+  color:           var(--c-text-sec);
+  font-size:       14px;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  transition:      background 0.15s ease;
+}
+.sheet-close:active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Scrollable body ──────────────────────────────────────────────────────── */
+.sheet-body {
+  flex:      1;
+  overflow-y:   auto;
+  overflow-x:   hidden;
+  -webkit-overflow-scrolling: touch;
+  padding:   0 var(--sp-lg) var(--sp-lg);
+}

@@ -1,0 +1,64 @@
+.app-header {
+  position:  fixed;
+  top:       0;
+  left:      0;
+  right:     0;
+  z-index:   100;
+
+  display:         flex;
+  align-items:     flex-end;
+  justify-content: space-between;
+  padding:         0 var(--sp-lg) var(--sp-sm);
+  padding-top:     var(--safe-top);
+
+  /* Exact height = visual base + notch inset.
+     Matches --header-h token (= base + safe-top) for pixel-perfect
+     content offset, drawer alignment and Dynamic Island devices. */
+  min-height: calc(var(--header-base-h) + var(--safe-top));
+
+  background:              rgba(8, 8, 8, 0.55);
+  backdrop-filter:         blur(var(--glass-blur)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  border-bottom:           1px solid var(--c-border-sub);
+
+  transform:  translateY(0);
+  transition: transform 220ms cubic-bezier(.22, .61, .36, 1);
+  /* will-change managed dynamically by Header.tsx */
+}
+
+.app-header--animating { will-change: transform; }
+.app-header--hidden    { transform: translateY(calc(-100% - var(--safe-top))); }
+
+.header-title {
+  font-size:      17px;
+  font-weight:    700;
+  letter-spacing: -0.4px;
+  color:          var(--c-text);
+  user-select:    none;
+  line-height:    1;
+  padding-bottom: 2px;
+}
+
+.header-btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:  38px;
+  height: 38px;
+  border-radius:   var(--r-sm);
+  background:      transparent;
+  color:           var(--c-text);
+  transition:      background 0.15s ease, color 0.15s ease;
+}
+
+.header-btn--active {
+  background: var(--c-accent-dim);
+  color:      var(--c-accent);
+}
+
+.header-btn:focus-visible {
+  outline:        2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+.header-spacer { width: 38px; }
