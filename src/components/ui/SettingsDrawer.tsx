@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { resetAllData } from '../../App'
 import { ChevronRight } from 'lucide-react'
 import { useUIStore }          from '../../stores/ui'
 import { useSettingsStore }    from '../../stores/settings'
@@ -71,7 +72,7 @@ export function SettingsDrawer({ onClose }: Props) {
 
           {[
             { emoji: '💊', label: 'Medikamentenkatalog', sub: 'Gespeicherte Medikamente' },
-            { emoji: 'ℹ️', label: 'Über Health Hub',     sub: 'Version 1.6.0'            },
+            { emoji: 'ℹ️', label: 'Über Health Hub',     sub: 'Version 1.8.0'            },
           ].map(item => (
             <div key={item.label} className="sd-menu-row" onClick={onClose}>
               <span className="sd-menu-emoji">{item.emoji}</span>
@@ -82,6 +83,9 @@ export function SettingsDrawer({ onClose }: Props) {
               <ChevronRight size={14} className="sd-menu-chevron" />
             </div>
           ))}
+
+          {/* Reset – danger zone */}
+          <ResetRow />
         </section>
       </div>
 
@@ -94,6 +98,37 @@ export function SettingsDrawer({ onClose }: Props) {
         <ShortcutsBridge onClose={() => setBridgeOpen(false)} />
       </BottomSheet>
     </>
+  )
+}
+
+// ── Reset row with confirmation ───────────────────────────────────────────────
+function ResetRow() {
+  const [confirm, setConfirm] = useState(false)
+
+  if (confirm) return (
+    <div className="sd-reset-confirm">
+      <p className="sd-reset-confirm__text">
+        Alle Daten unwiderruflich loschen?
+      </p>
+      <div className="sd-reset-confirm__btns">
+        <button className="sd-reset-btn sd-reset-btn--cancel" onClick={() => setConfirm(false)}>
+          Abbrechen
+        </button>
+        <button className="sd-reset-btn sd-reset-btn--ok" onClick={() => resetAllData()}>
+          Ja, loschen
+        </button>
+      </div>
+    </div>
+  )
+
+  return (
+    <div className="sd-menu-row sd-menu-row--danger" onClick={() => setConfirm(true)}>
+      <span className="sd-menu-emoji">🗑️</span>
+      <div className="sd-menu-text">
+        <span className="sd-menu-title sd-danger-title">Alle Daten loschen</span>
+        <span className="sd-menu-sub">App auf Werkseinstellungen zurucksetzen</span>
+      </div>
+    </div>
   )
 }
 

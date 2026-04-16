@@ -23,6 +23,21 @@ const SEED_KEY      = 'hh_seeded'
 const SYNC_ID_KEY   = 'hh_last_sync_id'   // sessionStorage – prevents duplicate import on restore
 
 // Tabs whose state & scroll position should be preserved once visited
+
+// ── Global reset – wipes all local data and reloads ─────────────────────────
+export async function resetAllData(): Promise<void> {
+  const { db } = await import('./db')
+  await db.events.clear()
+  await db.medications.clear()
+  await db.illnesses.clear()
+  await db.baselines.clear()
+  await db.settings.clear()
+  const keys = ['hh_seeded','hh_theme','hh_bridge_token','hh_last_sync_id']
+  keys.forEach(k => localStorage.removeItem(k))
+  sessionStorage.clear()
+  window.location.reload()
+}
+
 const KEEP_MOUNTED: TabId[] = ['calendar', 'analysis']
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -55,20 +70,7 @@ export default function App() {
     // ── Seed guard ──────────────────────────────────────────────────────────
     // Uses both seeding.current (in-memory) and localStorage 'pending' flag
     // to survive StrictMode double-mount, Hot Reload, and Safari restore.
-    const flag = localStorage.getItem(SEED_KEY)
-    if (!flag && !seeding.current) {
-      seeding.current = true
-      localStorage.setItem(SEED_KEY, 'pending')
-      seedDemoData()
-        .then(() => {
-          localStorage.setItem(SEED_KEY, '1')
-          seeding.current = false   // ← lifecycle cleanup
-        })
-        .catch(() => {
-          localStorage.removeItem(SEED_KEY)
-          seeding.current = false   // ← allow retry on next launch
-        })
-    }
+    // Demo seed disabled – app starts empty
 
     // ── Shortcuts Bridge sync ───────────────────────────────────────────────
     // sessionStorage guard: processSyncURL() strips query params from the URL

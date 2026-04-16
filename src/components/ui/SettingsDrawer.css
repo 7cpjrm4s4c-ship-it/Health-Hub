@@ -124,3 +124,46 @@
 .sd-menu-sub   { font-size: 11px; color: var(--c-text-sec); }
 
 .sd-menu-chevron { color: var(--c-text-ter); flex-shrink: 0; }
+
+/* ── Reset / Danger zone ──────────────────────────────────────────────────── */
+.sd-menu-row--danger:active { background: rgba(255,69,58,0.08); }
+
+.sd-danger-title { color: var(--c-red) !important; }
+
+.sd-reset-confirm {
+  padding: var(--sp-sm) var(--sp-sm) var(--sp-md);
+}
+
+.sd-reset-confirm__text {
+  font-size: 13px;
+  color: var(--c-text-sec);
+  margin-bottom: var(--sp-sm);
+  line-height: 1.4;
+}
+
+.sd-reset-confirm__btns {
+  display: flex;
+  gap: var(--sp-sm);
+}
+
+.sd-reset-btn {
+  flex: 1;
+  height: 40px;
+  border-radius: var(--r-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sd-reset-btn--cancel {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--c-border-sub);
+  color: var(--c-text-sec);
+}
+
+.sd-reset-btn--ok {
+  background: var(--c-red);
+  border: 1px solid transparent;
+  color: #fff;
+}
