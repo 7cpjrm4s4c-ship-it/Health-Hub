@@ -55,18 +55,16 @@ export async function processSyncURL(): Promise<SyncResult | null> {
 
   const stored = getBridgeToken()
 
-  // Debug: log both tokens to console so user can verify in Safari DevTools
-  console.log('[Bridge] URL token:   ', JSON.stringify(token))
-  console.log('[Bridge] Stored token:', JSON.stringify(stored))
-
-  if (!stored) {
-    return { success: false, imported: 0, date: '', error: 'Kein Token gespeichert – bitte in Shortcuts Bridge setzen' }
+  // iOS PWA and Safari have separate localStorage.
+  // Strategy: if no token stored yet, accept and save the token from the URL.
+  // If a token IS stored, it must match (prevents random URLs from importing).
+  if (stored && token.trim().toLowerCase() !== stored.trim().toLowerCase()) {
+    return { success: false, imported: 0, date: '', error: 'Ungültiger Token' }
   }
 
-  // Trim both sides and compare case-insensitively to catch copy/paste issues
-  if (token.trim().toLowerCase() !== stored.trim().toLowerCase()) {
-    const preview = stored.trim().slice(0, 6) + '...'
-    return { success: false, imported: 0, date: '', error: `Token stimmt nicht. Erwartet: ${preview}` }
+  // First sync: auto-save token from URL
+  if (!stored) {
+    setBridgeToken(token.trim())
   }
 
   const date     = params.get('date') ?? new Date().toISOString().slice(0, 10)
