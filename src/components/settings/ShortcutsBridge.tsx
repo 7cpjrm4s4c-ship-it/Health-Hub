@@ -1,215 +1,146 @@
 import { useState, useEffect } from 'react'
-import { Copy, Check, RefreshCw, ExternalLink, ChevronRight, ChevronDown } from 'lucide-react'
-import {
-  getBridgeToken, generateBridgeToken, clearBridgeToken, buildShortcutURL
-} from '../../services/shortcuts'
+import { getBridgeToken, setBridgeToken, buildShortcutURL } from '../../services/shortcuts'
 import { Glass } from '../ui/Glass'
 import './ShortcutsBridge.css'
 
-// ─── Setup steps ─────────────────────────────────────────────────────────────
-
-const STEPS = [
-  {
-    num: '1',
-    title: 'Shortcut öffnen',
-    body: 'Öffne die Kurzbefehle-App auf deinem iPhone und tippe auf das + Symbol oben rechts.',
-  },
-  {
-    num: '2',
-    title: '"Gesundheitsmuster suchen" hinzufügen',
-    body: 'Füge für jeden Wert eine eigene Aktion "Gesundheitsmuster suchen" hinzu. Wähle als Zeitraum "Heute".',
-    details: [
-      { label: 'Ruhepuls',          param: 'rhr',   note: 'Resting Heart Rate' },
-      { label: 'Herzfrequenz-Var.',  param: 'hrv',   note: 'Heart Rate Variability' },
-      { label: 'Schritte',           param: 'steps', note: 'Steps' },
-      { label: 'Schlaf',             param: 'sleep', note: 'Sleep Analysis – Dauer in Stunden' },
-      { label: 'Sauerstoffsätt.',    param: 'spo2',  note: 'Oxygen Saturation' },
-      { label: 'Körpertemperatur',   param: 'temp',  note: 'Body Temperature' },
-    ],
-  },
-  {
-    num: '3',
-    title: '"URL öffnen" hinzufügen',
-    body: 'Füge die Aktion "URL öffnen" hinzu und ersetze die Werte mit den Ergebnissen der obigen Aktionen. Kopiere deine persönliche Sync-URL unten.',
-  },
-  {
-    num: '4',
-    title: 'Automatisierung einrichten',
-    body: 'Gehe zu Automatisierungen → + → Persönliche Automatisierung → Tageszeit (z. B. 08:00 Uhr). Wähle deinen Shortcut aus. Aktiviere "Ohne Bestätigung ausführen".',
-  },
-]
-
-// ─── Component ────────────────────────────────────────────────────────────────
-
-interface Props {
-  onClose?: () => void
-}
+interface Props { onClose?: () => void }
 
 export function ShortcutsBridge({ onClose }: Props) {
-  const [token,       setToken]       = useState<string | null>(null)
-  const [copied,      setCopied]      = useState(false)
-  const [showRegen,   setShowRegen]   = useState(false)
-  const [expandStep,  setExpandStep]  = useState<number | null>(null)
+  const [token,   setToken]   = useState('')
+  const [saved,   setSaved]   = useState(false)
+  const [copied,  setCopied]  = useState(false)
+  const [editing, setEditing] = useState(false)
 
   useEffect(() => {
-    // Load or generate token on first visit
-    let t = getBridgeToken()
-    if (!t) t = generateBridgeToken()
-    setToken(t)
+    const t = getBridgeToken()
+    if (t) { setToken(t); setSaved(true) }
   }, [])
 
-  // Build the template URL for display
-  const appBase = window.location.origin + window.location.pathname.replace(/\/$/, '')
-  const syncURL  = token ? buildShortcutURL(appBase, token) : ''
+  const appBase = window.location.origin + window.location.pathname
+  const syncURL = saved && token
+    ? buildShortcutURL(appBase, token)
+    : ''
 
-  // ── Copy URL ──
-  async function copyURL() {
+  function handleSave() {
+    if (!token.trim()) return
+    setBridgeToken(token.trim())
+    setSaved(true)
+    setEditing(false)
+  }
+
+  async function handleCopy() {
     if (!syncURL) return
     await navigator.clipboard.writeText(syncURL)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
-  // ── Regenerate token ──
-  function regenToken() {
-    const t = generateBridgeToken()
-    setToken(t)
-    setShowRegen(false)
-  }
+  const steps = [
+    'Kurzbefehle-App oeffnen → + → Neue Automatisierung → Tageszeit (z.B. 06:00)',
+    'Health-Messungen suchen hinzufuegen fuer: Ruheherzfrequenz, HRV, Schritte, Schlafdauer, Blutsauerstoff, Koerpertemperatur. Jeweils: Beschraenken AN, Abrufen 1 Messung, Sortieren nach Startdatum absteigend.',
+    'Datum-Aktion hinzufuegen: Format yyyy-MM-dd, Uhrzeit: Keine.',
+    'URL oeffnen hinzufuegen. Die Sync-URL unten kopieren und einfuegen. Platzhalter DATE, RHR, HRV usw. durch die jeweiligen Variablen ersetzen.',
+    'Ohne Bestaetigung ausfuehren aktivieren. Fertig.',
+  ]
 
   return (
     <div className="sb-page">
+
       {/* Header */}
       <div className="sb-header">
-        <div className="sb-header__icon">🔗</div>
-        <div>
-          <h2 className="sb-header__title">Shortcuts Bridge</h2>
-          <p className="sb-header__sub">Apple Health → Health Hub</p>
+        <div className="sb-header-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+          </svg>
         </div>
-        {token && (
-          <div className="sb-status sb-status--active">
-            <span className="sb-status__dot" />
+        <div>
+          <div className="sb-header-title">Shortcuts Bridge</div>
+          <div className="sb-header-sub">Apple Health → Health Hub</div>
+        </div>
+        {saved && (
+          <div className="sb-status-badge">
+            <div className="sb-status-dot" />
             Aktiv
           </div>
         )}
       </div>
 
-      {/* How it works */}
-      <Glass className="sb-info-card">
-        <p className="sb-info-title">Wie es funktioniert</p>
-        <p className="sb-info-body">
-          Ein iOS Kurzbefehl liest täglich deine Apple Health-Daten und öffnet die App
-          mit den Werten in der URL. Die Daten werden direkt in die App importiert —
-          kein Server, alles bleibt auf deinem Gerät.
+      {/* Token setup */}
+      <Glass className="sb-token-card">
+        <div className="sb-section-label">Dein persönlicher Token</div>
+        <p className="sb-token-hint">
+          Wähle ein eigenes Passwort als Token. Verwende dasselbe auf allen deinen Geräten –
+          dann brauchst du den Shortcut nur einmal einzurichten.
         </p>
-      </Glass>
 
-      {/* Sync URL */}
-      <div className="sb-url-section">
-        <p className="sb-section-label">Deine Sync-URL</p>
-        <Glass className="sb-url-card">
-          <p className="sb-url-text">{syncURL}</p>
-          <div className="sb-url-actions">
-            <button className="sb-copy-btn" onClick={copyURL}>
-              {copied ? <Check size={15} /> : <Copy size={15} />}
-              {copied ? 'Kopiert!' : 'URL kopieren'}
-            </button>
+        {(!saved || editing) ? (
+          <div className="sb-token-input-row">
+            <input
+              className="sb-token-input"
+              type="text"
+              value={token}
+              onChange={e => setToken(e.target.value)}
+              placeholder="z.B. meingeheimerwert123"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+            />
             <button
-              className="sb-regen-btn"
-              onClick={() => setShowRegen(!showRegen)}
-              title="Token neu generieren"
+              className="sb-save-btn"
+              onClick={handleSave}
+              disabled={!token.trim()}
             >
-              <RefreshCw size={14} />
+              Speichern
             </button>
           </div>
-        </Glass>
-        {showRegen && (
-          <Glass className="sb-regen-confirm anim-fade-in">
-            <p className="sb-regen-confirm__text">
-              Neuen Token generieren? Die alte URL funktioniert dann nicht mehr.
-            </p>
-            <div className="sb-regen-confirm__btns">
-              <button className="sb-regen-cancel" onClick={() => setShowRegen(false)}>
-                Abbrechen
-              </button>
-              <button className="sb-regen-ok" onClick={regenToken}>
-                Neu generieren
-              </button>
+        ) : (
+          <div className="sb-token-saved-row">
+            <div className="sb-token-value">
+              {'•'.repeat(Math.min(token.length, 20))}
             </div>
-          </Glass>
+            <button className="sb-edit-btn" onClick={() => setEditing(true)}>
+              Ändern
+            </button>
+          </div>
         )}
-      </div>
+      </Glass>
+
+      {/* Sync URL – only shown when token is set */}
+      {saved && syncURL && (
+        <Glass className="sb-url-card">
+          <div className="sb-section-label">Deine Sync-URL</div>
+          <div className="sb-url-text">{syncURL}</div>
+          <button className="sb-copy-btn" onClick={handleCopy}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              {copied
+                ? <polyline points="20 6 9 17 4 12" />
+                : <><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></>
+              }
+            </svg>
+            {copied ? 'Kopiert!' : 'URL kopieren'}
+          </button>
+        </Glass>
+      )}
 
       {/* Setup steps */}
-      <p className="sb-section-label">Einrichtung (Schritt für Schritt)</p>
+      <div className="sb-section-label">Einrichtung</div>
       <div className="sb-steps">
-        {STEPS.map((step, i) => {
-          const isOpen = expandStep === i
-          return (
-            <Glass key={i} className="sb-step">
-              <button
-                className="sb-step__header"
-                onClick={() => setExpandStep(isOpen ? null : i)}
-              >
-                <div className="sb-step__num">{step.num}</div>
-                <span className="sb-step__title">{step.title}</span>
-                {isOpen
-                  ? <ChevronDown size={16} className="sb-step__chevron" />
-                  : <ChevronRight size={16} className="sb-step__chevron" />
-                }
-              </button>
-
-              {isOpen && (
-                <div className="sb-step__body anim-fade-in">
-                  <p className="sb-step__text">{step.body}</p>
-                  {step.details && (
-                    <div className="sb-step__details">
-                      {step.details.map(d => (
-                        <div key={d.param} className="sb-step__detail-row">
-                          <code className="sb-step__param">{d.param}=</code>
-                          <div>
-                            <span className="sb-step__detail-label">{d.label}</span>
-                            <span className="sb-step__detail-note">{d.note}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  {i === 2 && (
-                    <button className="sb-copy-inline" onClick={copyURL}>
-                      {copied ? '✓ Kopiert' : 'Sync-URL kopieren'}
-                    </button>
-                  )}
-                </div>
-              )}
-            </Glass>
-          )
-        })}
+        {steps.map((s, i) => (
+          <div key={i} className="sb-step-row">
+            <div className="sb-step-num">{i + 1}</div>
+            <div className="sb-step-text">{s}</div>
+          </div>
+        ))}
       </div>
 
-      {/* URL template explanation */}
-      <Glass className="sb-template-card">
-        <p className="sb-info-title">URL-Parameter Übersicht</p>
-        <div className="sb-params">
-          {[
-            { p: 'hh_sync', desc: 'Dein persönlicher Token (automatisch)' },
-            { p: 'date',    desc: 'Datum im Format YYYY-MM-DD' },
-            { p: 'rhr',     desc: 'Ruhepuls in bpm' },
-            { p: 'hrv',     desc: 'HRV in ms' },
-            { p: 'sleep',   desc: 'Schlafdauer in Stunden (z.B. 7.5)' },
-            { p: 'steps',   desc: 'Schritte als ganze Zahl' },
-            { p: 'spo2',    desc: 'Sauerstoffsättigung in %' },
-            { p: 'temp',    desc: 'Körpertemperatur in °C' },
-          ].map(r => (
-            <div key={r.p} className="sb-param-row">
-              <code className="sb-param-key">{r.p}</code>
-              <span className="sb-param-desc">{r.desc}</span>
-            </div>
-          ))}
-        </div>
-        <p className="sb-param-note">
-          Alle Parameter außer <code>hh_sync</code> und <code>date</code> sind optional.
-          Fehlende Werte werden einfach übersprungen.
+      {/* Multi-device note */}
+      <Glass className="sb-info-card">
+        <div className="sb-section-label">Mehrere Geräte</div>
+        <p className="sb-info-body">
+          Trage auf jedem Gerät denselben Token ein. Der Shortcut muss nur einmal
+          auf einem iPhone eingerichtet werden und funktioniert dann für alle Geräte
+          mit demselben Token.
         </p>
       </Glass>
 
