@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState, lazy, Suspense } from 'react'
-import { Header }    from './components/ui/Header'
-import { PillNav }   from './components/ui/PillNav'
-import { SyncToast } from './components/ui/SyncToast'
+import { Header }          from './components/ui/Header'
+import { PillNav }         from './components/ui/PillNav'
+import { SyncToast }       from './components/ui/SyncToast'
+import { BottomSheet }     from './components/ui/BottomSheet'
+import { SettingsDrawer }  from './components/ui/SettingsDrawer'
 import { useUIStore }                      from './stores/ui'
 import { useSettingsStore, seedDemoData }  from './stores/settings'
 import { useBaselineStore }                from './stores/baseline'
@@ -47,7 +49,7 @@ function TabFallback() {
 }
 
 export default function App() {
-  const { activeTab, initTheme }    = useUIStore()
+  const { activeTab, initTheme, settingsOpen, closeSettings } = useUIStore()
   const { init: initSettings }      = useSettingsStore()
   const { recalculate, loadToday }  = useBaselineStore()
   const seeding                     = useRef(false)
@@ -142,6 +144,11 @@ export default function App() {
       </main>
 
       <PillNav />
+
+      {/* Settings as BottomSheet – correct scroll context, native iOS feel */}
+      <BottomSheet open={settingsOpen} onClose={closeSettings} title="Einstellungen">
+        <SettingsDrawer onClose={closeSettings} />
+      </BottomSheet>
 
       {syncResult && (
         <SyncToast

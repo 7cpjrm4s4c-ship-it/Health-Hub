@@ -46,10 +46,14 @@ export function ScrollPane({ children, className = '', style }: Props) {
     })
   }
 
+  // height:100% is critical – without it the scroll container has no defined
+  // height on iOS and touch events have no valid scroll target.
+  const combinedStyle: CSSProperties = { height: '100%', ...style }
+
   return (
     <div
       className={`scroll-container ${className}`}
-      style={style}
+      style={combinedStyle}
       onScroll={onScroll}
     >
       {children}

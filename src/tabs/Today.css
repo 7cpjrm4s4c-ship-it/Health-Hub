@@ -4,7 +4,6 @@
   gap:            var(--sp-md);
   padding:        var(--sp-lg);
   padding-bottom: var(--content-pb);
-  /* Must have explicit height to allow inner scroll on iOS */
   min-height:     100%;
   box-sizing:     border-box;
 }
