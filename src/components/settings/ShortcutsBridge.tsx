@@ -56,6 +56,7 @@ export function ShortcutsBridge({ onClose }: Props) {
     'Health-Messungen suchen hinzufuegen fuer: Ruheherzfrequenz, HRV, Schritte, Schlafdauer, Blutsauerstoff, Koerpertemperatur. Beschraenken AN, 1 Messung, Sortieren: Startdatum neueste zuerst.',
     'Datum-Aktion hinzufuegen. Format benutzerdefiniert: yyyy-MM-dd, Uhrzeit: Keine.',
     'URL oeffnen hinzufuegen. Sync-URL unten kopieren und einfuegen. Platzhalter DATE, RHR usw. durch Variablen der jeweiligen Aktion ersetzen.',
+    'Wichtig: Nach dem URL oeffnen eine App oeffnen Aktion hinzufuegen → Health Hub (vom Homescreen) auswaehlen. So werden die Daten direkt in die PWA importiert statt in Safari.',
     'Ohne Bestaetigung ausfuehren aktivieren. Den Shortcut einmal manuell testen.',
   ]
 

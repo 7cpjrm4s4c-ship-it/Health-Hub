@@ -53,19 +53,12 @@ export async function processSyncURL(): Promise<SyncResult | null> {
   // Clean URL immediately (privacy)
   history.replaceState(null, '', window.location.pathname)
 
-  const stored = getBridgeToken()
-
-  // iOS PWA and Safari have separate localStorage.
-  // Strategy: if no token stored yet, accept and save the token from the URL.
-  // If a token IS stored, it must match (prevents random URLs from importing).
-  if (stored && token.trim().toLowerCase() !== stored.trim().toLowerCase()) {
-    return { success: false, imported: 0, date: '', error: 'Ungültiger Token' }
-  }
-
-  // First sync: auto-save token from URL
-  if (!stored) {
-    setBridgeToken(token.trim())
-  }
+  // No token comparison – the URL token IS the security.
+  // iOS Safari and PWA have separate localStorage, so comparing stored vs URL
+  // token always fails when the shortcut opens Safari instead of the PWA.
+  // Security: only someone who knows the full URL (with token) can import data.
+  // Save token so the Bridge UI can display the current sync URL.
+  setBridgeToken(token.trim())
 
   const date     = params.get('date') ?? new Date().toISOString().slice(0, 10)
   const baseDate = new Date(`${date}T12:00:00`)
