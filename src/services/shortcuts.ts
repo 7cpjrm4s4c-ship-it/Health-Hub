@@ -54,8 +54,19 @@ export async function processSyncURL(): Promise<SyncResult | null> {
   history.replaceState(null, '', window.location.pathname)
 
   const stored = getBridgeToken()
-  if (!stored || token.trim() !== stored.trim()) {
-    return { success: false, imported: 0, date: '', error: 'Ungültiger Token' }
+
+  // Debug: log both tokens to console so user can verify in Safari DevTools
+  console.log('[Bridge] URL token:   ', JSON.stringify(token))
+  console.log('[Bridge] Stored token:', JSON.stringify(stored))
+
+  if (!stored) {
+    return { success: false, imported: 0, date: '', error: 'Kein Token gespeichert – bitte in Shortcuts Bridge setzen' }
+  }
+
+  // Trim both sides and compare case-insensitively to catch copy/paste issues
+  if (token.trim().toLowerCase() !== stored.trim().toLowerCase()) {
+    const preview = stored.trim().slice(0, 6) + '...'
+    return { success: false, imported: 0, date: '', error: `Token stimmt nicht. Erwartet: ${preview}` }
   }
 
   const date     = params.get('date') ?? new Date().toISOString().slice(0, 10)

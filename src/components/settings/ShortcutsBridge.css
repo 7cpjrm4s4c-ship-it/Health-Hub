@@ -247,3 +247,38 @@
   color: var(--c-text-sec);
   line-height: 1.5;
 }
+
+.sb-token-display {
+  font-size: 12px;
+  color: var(--c-text-sec);
+  padding: var(--sp-xs) var(--sp-sm);
+  background: rgba(255,255,255,0.04);
+  border-radius: var(--r-sm);
+  margin-top: var(--sp-xs);
+}
+
+.sb-token-display code {
+  font-family: monospace;
+  color: var(--c-accent);
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.sb-test-btn {
+  width: 100%;
+  height: 42px;
+  border-radius: var(--r-md);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--c-border-sub);
+  color: var(--c-text-sec);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sb-test-btn:active {
+  background: var(--c-accent-dim);
+  color: var(--c-accent);
+  border-color: var(--c-border);
+}

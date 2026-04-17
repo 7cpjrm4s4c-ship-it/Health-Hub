@@ -120,6 +120,15 @@ export function ShortcutsBridge({ onClose }: Props) {
             </svg>
             {copied ? 'Kopiert!' : 'URL kopieren'}
           </button>
+          <button className="sb-test-btn" onClick={() => {
+            const testUrl = syncURL
+              .replace('DATE', new Date().toISOString().slice(0,10))
+              .replace('RHR','').replace('HRV','').replace('SLEEP','')
+              .replace('STEPS','').replace('SPO2','99').replace('TEMP','')
+            window.location.href = testUrl
+          }}>
+            Sync testen (SpO2=99)
+          </button>
         </Glass>
       )}
 
