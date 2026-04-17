@@ -30,7 +30,7 @@
   inset:          0;
   display:        none;
   flex-direction: column;
-  overflow:       hidden;
+  overflow:       clip;   /* clip not hidden – hidden blocks nested scroll on iOS */
 }
 
 .tab-slot[data-active="true"] {
@@ -46,7 +46,7 @@
 .tab-slot--keep:not([data-active="true"]) {
   visibility:     hidden;
   pointer-events: none;
-  contain:        strict;
+  contain:        layout paint;
   animation:      none;
 }
 

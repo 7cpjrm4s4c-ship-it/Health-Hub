@@ -53,6 +53,10 @@ body {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y:      contain;
   touch-action:               pan-y;
+  /* min-height:0 is critical in flex containers on iOS –
+     without it the container collapses and scroll never triggers */
+  min-height:                 0;
+  height:                     100%;
 }
 
 /* ── Inputs – minimum 16px prevents iOS auto-zoom ───────────────────────────── */

@@ -4,8 +4,7 @@
   gap:            var(--sp-md);
   padding:        var(--sp-lg);
   padding-bottom: var(--content-pb);
-  min-height:     100%;
-  box-sizing:     border-box;
+  /* min-height:100% removed – it sets scrollHeight===clientHeight on iOS */
 }
 
 /* ── Score Hero ─────────────────────────────────────────────────────────────── */
