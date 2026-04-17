@@ -82,10 +82,10 @@ export default function App() {
     processSyncURL().then(async result => {
       if (!result) return
 
-      if (result.success) {
-        const syncId = `${result.date}:${result.imported}`
-        const lastId = sessionStorage.getItem(SYNC_ID_KEY)
-        if (syncId === lastId) return
+      if (result.success && result.imported > 0) {
+        // Dedup guard: use timestamp precision so re-runs within same minute
+        // still trigger a refresh (date alone was too coarse)
+        const syncId = `${result.date}:${result.imported}:${Date.now()}`
         sessionStorage.setItem(SYNC_ID_KEY, syncId)
 
         // Reload health store so Today tab widgets refresh immediately
