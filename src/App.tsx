@@ -77,18 +77,20 @@ export default function App() {
     // immediately, but Safari standalone PWA can restore the previous URL state
     // from Back/Forward cache or App Switcher. The sync ID prevents re-importing
     // the same dataset on every restore.
-    processSyncURL().then(result => {
+    processSyncURL().then(async result => {
       if (!result) return
 
       if (result.success) {
-        // Build a deterministic sync ID from date + imported count
         const syncId = `${result.date}:${result.imported}`
         const lastId = sessionStorage.getItem(SYNC_ID_KEY)
-
-        if (syncId === lastId) return   // already imported this dataset this session
+        if (syncId === lastId) return
         sessionStorage.setItem(SYNC_ID_KEY, syncId)
 
-        recalculate().then(() => loadToday())
+        // Reload health store so Today tab widgets refresh immediately
+        const { useHealthStore } = await import('./stores/health')
+        await useHealthStore.getState().loadAll()
+        await recalculate()
+        await loadToday()
       }
 
       setSyncResult(result)
